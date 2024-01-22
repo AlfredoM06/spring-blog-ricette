@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Lista Ricette</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: head('Lista Ricette')"></head>
 <body>
 <h1>Lista delle Ricette</h1>
+<div class="alert alert-info" th:if="${listaRicette.size() == 0}">
+    The list is empty
+</div>
+<table class="table" th:unless="${listaRicette.size() == 0}">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Porzioni</th>
+        <th>Tempo</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="ricetta : ${listaRicette}">
+        <td th:text="${ricetta.title}"></td>
+        <td th:text="${ricetta.portions}"></td>
+        <td th:text="${ricetta.time}"></td>
+    </tr>
+    </tbody>
+</table>
+<th:block th:replace="fragments/resources :: script"></th:block>
 </body>
 </html>
