@@ -3,6 +3,7 @@ package org.lessons.springblogricette.Controller;
 import jakarta.validation.Valid;
 import org.lessons.springblogricette.Model.Ricetta;
 import org.lessons.springblogricette.Repository.BlogRepository;
+import org.lessons.springblogricette.Repository.CategorieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class RicettaController {
 
     @Autowired
     private BlogRepository blogRepository;
+
+    @Autowired
+    private CategorieRepository categorieRepository;
 
 
     @GetMapping
@@ -46,12 +50,14 @@ public class RicettaController {
     @GetMapping("/create")
     public String create(Model model) {
         model.addAttribute("ricetta", new Ricetta());
+        model.addAttribute("listaCategorie", categorieRepository.findAll());
         return "ricette/create";
     }
 
     @PostMapping("/create")
     public String store(@Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("listaCategorie", categorieRepository.findAll());
             return "ricette/create";
         }
         Ricetta saveRicetta = blogRepository.save(formRicetta);
@@ -63,6 +69,7 @@ public class RicettaController {
         Optional<Ricetta> result = blogRepository.findById(id);
         if (result.isPresent()) {
             model.addAttribute("ricetta", result.get());
+            model.addAttribute("listaCategorie", categorieRepository.findAll());
             return "ricette/edit";
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ricetta with id " + id + " not found");
@@ -72,6 +79,7 @@ public class RicettaController {
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Integer id, @Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("listaCategorie", categorieRepository.findAll());
             return "ricette/edit";
         }
         Ricetta saveRicetta = blogRepository.save(formRicetta);
