@@ -37,7 +37,7 @@ public class RicettaController {
             model.addAttribute("ricetta", ricetta);
             return "ricette/show";
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza with id " + id + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ricetta with id " + id + " not found");
 
         }
     }
@@ -57,5 +57,23 @@ public class RicettaController {
         return "redirect:/ricette/show/" + saveRicetta.getId();
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable Integer id, Model model) {
+        Optional<Ricetta> result = blogRepository.findById(id);
+        if (result.isPresent()) {
+            model.addAttribute("ricetta", result.get());
+            return "ricette/edit";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ricetta with id " + id + " not found");
+        }
+    }
 
+    @PostMapping("/edit/{id}")
+    public update(@PathVariable Integer id, @Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "ricette/edit";
+        }
+        Ricetta saveRicetta = blogRepository.save(formRicetta);
+        return "redirect:/ricette/show/" + id;
+    }
 }
