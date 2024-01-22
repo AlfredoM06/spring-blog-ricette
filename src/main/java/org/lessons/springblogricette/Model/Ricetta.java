@@ -1,6 +1,11 @@
 package org.lessons.springblogricette.Model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "ricette")
@@ -8,11 +13,22 @@ public class Ricetta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(nullable = false)
+    @NotEmpty
     private String title;
+    @NotEmpty
+    @Lob
     private String recipe;
+    @NotEmpty
     private String foto;
-    private Integer time;
+    @NotNull
+    @Min(0)
+    private BigDecimal time;
+    @NotNull
+    @Min(0)
     private Integer portions;
+    @NotEmpty
+    @Lob
     private String description;
 
     public Integer getId() {
@@ -47,11 +63,11 @@ public class Ricetta {
         this.foto = foto;
     }
 
-    public Integer getTime() {
+    public BigDecimal getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(BigDecimal time) {
         this.time = time;
     }
 
