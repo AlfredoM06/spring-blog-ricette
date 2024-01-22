@@ -10,6 +10,6 @@ public class HomeController {
 
     @GetMapping
     public String home() {
-        return "redirect:/ricette/list";
+        return "home/landing-page";
     }
 }

@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "ricette")
@@ -30,6 +31,9 @@ public class Ricetta {
     @NotEmpty
     @Lob
     private String description;
+
+    @ManyToMany(mappedBy = "ricetta")
+    private List<Categoria> categorie;
 
     public Integer getId() {
         return id;
@@ -85,5 +89,13 @@ public class Ricetta {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Categoria> getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(List<Categoria> categorie) {
+        this.categorie = categorie;
     }
 }
