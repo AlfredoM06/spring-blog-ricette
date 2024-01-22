@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -75,5 +76,18 @@ public class RicettaController {
         }
         Ricetta saveRicetta = blogRepository.save(formRicetta);
         return "redirect:/ricette/show/" + id;
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+        Optional<Ricetta> result = blogRepository.findById(id);
+        if (result.isPresent()) {
+            blogRepository.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Ricetta " + result.get().getTitle() + " deleted!");
+            return "redirect:/ricette";
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ricetta with id " + id + " not found");
+        }
+
     }
 }

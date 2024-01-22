@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/resources :: head('Dettagli Ricetta')"></head>
 <body>
+<nav th:replace="fragments/navbar :: topNavbar('ricette')"></nav>
 <div>
     <h1>Dettagli della ricetta: <span th:text="${ricetta.title}"></span></h1>
 
