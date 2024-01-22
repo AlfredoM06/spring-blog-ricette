@@ -32,7 +32,7 @@ public class Ricetta {
     @Lob
     private String description;
 
-    @ManyToMany(mappedBy = "ricetta")
+    @ManyToMany
     private List<Categoria> categorie;
 
     public Integer getId() {
