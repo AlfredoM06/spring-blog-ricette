@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dettagli Ricetta</title>
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/resources :: head('Dettagli Ricetta')"></head>
 <body>
-<h1>Dettagli della ricetta</h1>
+<div>
+    <h1>Dettagli della ricetta: <span th:text="${ricetta.title}"></span></h1>
+
+    <div>
+        <h2> Ecco i dettagli </h2>
+        <img th:src="${ricetta.foto}" alt="foto">
+        <p> Ricetta: <span th:text="${ricetta.recipe}"></span></p>
+        <p>Descrizione: <span th:text="${ricetta.description}"></span></p>
+    </div>
+    <div>
+        <a th:href="@{/ricette}" class="btn btn-primary">
+            <i class="fa-solid fa-arrow-left"></i> Back to list
+        </a>
+    </div>
+
+</div>
+
+
+<th:block th:replace="fragments/resources :: script"></th:block>
 </body>
 </html>
