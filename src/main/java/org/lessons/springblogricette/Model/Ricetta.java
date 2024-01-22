@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table(name = "ricette")
@@ -32,8 +31,8 @@ public class Ricetta {
     @Lob
     private String description;
 
-    @ManyToMany
-    private List<Categoria> categorie;
+    @ManyToOne
+    private Categoria categoria;
 
     public Integer getId() {
         return id;
@@ -91,11 +90,11 @@ public class Ricetta {
         this.description = description;
     }
 
-    public List<Categoria> getCategorie() {
-        return categorie;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setCategorie(List<Categoria> categorie) {
-        this.categorie = categorie;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 }
