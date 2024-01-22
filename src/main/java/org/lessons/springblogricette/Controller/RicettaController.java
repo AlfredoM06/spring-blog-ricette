@@ -69,7 +69,7 @@ public class RicettaController {
     }
 
     @PostMapping("/edit/{id}")
-    public update(@PathVariable Integer id, @Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
+    public String update(@PathVariable Integer id, @Valid @ModelAttribute("ricetta") Ricetta formRicetta, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "ricette/edit";
         }
